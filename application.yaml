@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-test
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:Telmediq/argocd-sources.git
+    targetRevision: HEAD
+    path: deployments
+  destination:
+    namespace: argo-test
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+    - CreateNamespace=true
